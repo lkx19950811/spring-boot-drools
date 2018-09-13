@@ -3,7 +3,8 @@ package plausibcheck.adress
 import com.neo.drools.model.Address;
 import com.neo.drools.model.fact.AddressCheckResult;
 import java.util.Map
-
+import org.slf4j.Logger;
+global Logger logger;
 global Map<String,String> map//使用前需要先setGlobal
 
 rule "test-2"
@@ -11,9 +12,9 @@ rule "test-2"
         $check:AddressCheckResult(count<10)
     then
         $check.setCount($check.getCount()+1);
-        System.out.println($check.getCount() + " 触发了>10互斥规则");
+        logger.info($check.getCount() + " 触发了<10 就 +1规则");
         map.put(Math.random()+"",$check.toString());
-        System.out.println(map);
+        logger.info(map.toString());
         update($check)//每次触发规则后 更新至working memory
 end
 
@@ -22,7 +23,7 @@ rule "test-1"
         $check:AddressCheckResult(count>=10)
     then
         $check.setCount($check.getCount()+1);
-        System.out.println($check.getCount() + " 停止了");
+        logger.info($check.getCount() + " 停止了");
         map.put(Math.random()+"",$check.toString());
-        System.out.println(map);
+        logger.info(map.toString());
 end

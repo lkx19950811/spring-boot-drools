@@ -1,22 +1,22 @@
 package com.neo.drools.controller;
 
-import com.neo.drools.KieSessionUtils;
+import com.neo.drools.Util.KieSessionUtils;
 import com.neo.drools.model.Address;
 import com.neo.drools.model.fact.AddressCheckResult;
-import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import javax.annotation.Resource;
 import java.util.HashMap;
 
 
 @RequestMapping("/test")
 @Controller
 public class TestController {
-
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
     //测试循环的
     @ResponseBody
     @RequestMapping("/address")
@@ -58,10 +58,11 @@ public class TestController {
         KieSession kieSession = KieSessionUtils.newKieSession("global.drl");
         AddressCheckResult result1 = new AddressCheckResult(5);
         kieSession.setGlobal("map",new HashMap<String,String>());
+        kieSession.setGlobal("logger",logger);
         kieSession.insert(result1);
         int ruleFiredCount = kieSession.fireAllRules();
         kieSession.destroy();
-        System.out.println("触发了" + ruleFiredCount + "条规则");
+        logger.info("触发了" + ruleFiredCount + "条规则");
     }
 
     /**

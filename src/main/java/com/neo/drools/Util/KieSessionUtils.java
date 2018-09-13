@@ -1,4 +1,4 @@
-package com.neo.drools;
+package com.neo.drools.Util;
 
 import org.kie.api.KieBase;
 import org.kie.api.KieServices;
