@@ -1,0 +1,24 @@
+package plausibcheck.adress
+
+import com.neo.drools.model.Address;
+import com.neo.drools.model.fact.AddressCheckResult;
+
+//no-loop true //防止死循环 自己无限调用自己
+//lock-on-active true//设定后 该规则只执行一次
+rule "Postcode should be filled with exactly 5 numbers"
+    when
+        address : Address(postcode != null, postcode matches "([0-9]{5})")//只有五位数字才会匹配
+        $check : AddressCheckResult(count<10);
+    then
+        $check.setPostCodeResult(true);
+        $check.setCount($check.getCount()+1);
+        update($check)
+		System.out.println("规则中打印日志：校验通过!" + $check.getCount());
+end
+
+rule "test count"
+    when
+        $check: AddressCheckResult(count>=10);
+    then
+        System.out.println($check.toString() + " 触发了另一个规则");
+end

@@ -1,0 +1,23 @@
+package plausibcheck.adress
+
+import com.neo.drools.model.Address;
+import com.neo.drools.model.fact.AddressCheckResult;
+
+rule "test-1"
+    activation-group "test"
+    agenda-group "testFlow"
+    when
+        $check:AddressCheckResult(count<10)//count小于10触发
+    then
+        System.out.println($check.getCount() + " 触发了<10互斥规则");
+end
+
+rule "test-2"
+    salience 1//设置了优先级
+    activation-group "test"
+    agenda-group "testFlow"
+    when
+        $check:AddressCheckResult(count>10)//count大于10触发
+    then
+        System.out.println($check.getCount() + " 触发了>10互斥规则");
+end

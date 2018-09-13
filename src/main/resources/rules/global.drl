@@ -1,0 +1,28 @@
+package plausibcheck.adress
+
+import com.neo.drools.model.Address;
+import com.neo.drools.model.fact.AddressCheckResult;
+import java.util.Map
+
+global Map<String,String> map//使用前需要先setGlobal
+
+rule "test-2"
+    when
+        $check:AddressCheckResult(count<10)
+    then
+        $check.setCount($check.getCount()+1);
+        System.out.println($check.getCount() + " 触发了>10互斥规则");
+        map.put(Math.random()+"",$check.toString());
+        System.out.println(map);
+        update($check)//每次触发规则后 更新至working memory
+end
+
+rule "test-1"
+    when
+        $check:AddressCheckResult(count>=10)
+    then
+        $check.setCount($check.getCount()+1);
+        System.out.println($check.getCount() + " 停止了");
+        map.put(Math.random()+"",$check.toString());
+        System.out.println(map);
+end
