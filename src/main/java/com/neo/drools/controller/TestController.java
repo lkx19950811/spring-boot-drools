@@ -70,7 +70,7 @@ public class TestController {
      * @param num
      * @return
      */
-    public String generateRandom(int num) {
+    private String generateRandom(int num) {
         String chars = "0123456789";
         StringBuffer number=new StringBuffer();
         for (int i = 0; i < num; i++) {
@@ -79,4 +79,6 @@ public class TestController {
         }
         return number.toString();
     }
+
+
 }

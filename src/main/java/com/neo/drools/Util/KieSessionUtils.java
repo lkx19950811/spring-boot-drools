@@ -20,12 +20,9 @@ import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
  *
  */
 public class KieSessionUtils {
-
     private static KieSession kieSession;
     private static final String RULES_PATH = "rules/";
-
     private KieSessionUtils() {
-
     }
     /**
      * @description TODO(创建包含所有规则的对象)
@@ -54,7 +51,6 @@ public class KieSessionUtils {
             throw ex;
         }
     }
-
     /**
      * @description TODO (快速新建KieSession)
      * @param classPath 绝对路径
@@ -66,7 +62,6 @@ public class KieSessionUtils {
         return kieSession;
 
     }
-
     /**
      * @description TODO (快速新建StatelessKieSession)
      * @param classPath 绝对路径
@@ -77,7 +72,6 @@ public class KieSessionUtils {
         return kiesession;
 
     }
-
     /**
      * @description TODO (清空对象)
      * @title disposeKieSession 重置KieSession
@@ -89,7 +83,6 @@ public class KieSessionUtils {
             kieSession = null;
         }
     }
-
     protected static KieBase getKieBase(String classPath) throws Exception {
         KieServices kieServices = KieServices.Factory.get();
         KieFileSystem kfs = kieServices.newKieFileSystem();
@@ -104,7 +97,4 @@ public class KieSessionUtils {
         KieBase kBase = kieContainer.getKieBase();
         return kBase;
     }
-
-
-
 }
